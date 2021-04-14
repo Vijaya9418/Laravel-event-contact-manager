@@ -12,7 +12,8 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+use App\Http\Controllers\fetchdata;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [fetchdata::class, 'index']);
+Route::get('/groups', [fetchdata::class, 'group']);
+Route::get('/events', [fetchdata::class, 'events']);
