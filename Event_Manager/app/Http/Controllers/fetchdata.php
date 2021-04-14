@@ -35,40 +35,73 @@ class fetchdata extends Controller
 
     public function index()
     {
-        static::getGroupdata();
-        static::getEventdata();
-        static::PostFetch();
-        return view('welcome', [
-            'pdgname' => static::$pdgname, 'pdtitle' => static::$pdtitle,
-            'pddata' => static::$pddata, 'pdgroup' => static::$pdgroup,
-            'pddate' => static::$pddate,
-            'eventn' => static::$eventn, 'eventd' => static::$eventd,
-            'eventt' => static::$eventt, 'evento' => static::$evento, 'status' => static::$status,
-            'eimgg' => static::$eimgg,
-            'users' => static::$users,
-            'groups' => static::$groups, 'groupsrole' => static::$groupsrole,
-            'imgg' => static::$imgg, 'gnocount' => static::$gnocount
-        ]);
+        if (isset($_COOKIE['username'])) {
+            static::getGroupdata();
+            static::getEventdata();
+            static::PostFetch();
+            return view('welcome', [
+                'pdgname' => static::$pdgname, 'pdtitle' => static::$pdtitle,
+                'pddata' => static::$pddata, 'pdgroup' => static::$pdgroup,
+                'pddate' => static::$pddate,
+                'eventn' => static::$eventn, 'eventd' => static::$eventd,
+                'eventt' => static::$eventt, 'evento' => static::$evento, 'status' => static::$status,
+                'eimgg' => static::$eimgg,
+                'users' => static::$users,
+                'groups' => static::$groups, 'groupsrole' => static::$groupsrole,
+                'imgg' => static::$imgg, 'gnocount' => static::$gnocount
+            ]);
+        } else {
+            return redirect('login');
+        }
     }
     public function group()
     {
-        static::getGroupdata();
-        return view('pages/groups', [
-            'groups' => static::$groups, 'groupsrole' => static::$groupsrole,
-            'imgg' => static::$imgg, 'gnocount' => static::$gnocount
-        ]);
+        if (isset($_COOKIE['username'])) {
+            static::getGroupdata();
+            return view('pages/groups', [
+                'groups' => static::$groups, 'groupsrole' => static::$groupsrole,
+                'imgg' => static::$imgg, 'gnocount' => static::$gnocount
+            ]);
+        } else {
+            return redirect('login');
+        }
+    }
+    public function explore()
+    {
+        if (isset($_COOKIE['username'])) {
+            static::getGroupdata();
+            static::getEventdata();
+            static::PostFetch();
+            return view('pages/explore', [
+                'pdgname' => static::$pdgname, 'pdtitle' => static::$pdtitle,
+                'pddata' => static::$pddata, 'pdgroup' => static::$pdgroup,
+                'pddate' => static::$pddate,
+                'eventn' => static::$eventn, 'eventd' => static::$eventd,
+                'eventt' => static::$eventt, 'evento' => static::$evento, 'status' => static::$status,
+                'eimgg' => static::$eimgg,
+                'users' => static::$users,
+                'groups' => static::$groups, 'groupsrole' => static::$groupsrole,
+                'imgg' => static::$imgg, 'gnocount' => static::$gnocount
+            ]);
+        } else {
+            return redirect('login');
+        }
     }
     public function events()
     {
-        static::getGroupdata();
-        static::getEventdata();
+        if (isset($_COOKIE['username'])) {
+            static::getGroupdata();
+            static::getEventdata();
 
-        return view('pages/events', [
-            'groups' => static::$groups,
-            'eventn' => static::$eventn, 'eventd' => static::$eventd,
-            'eventt' => static::$eventt, 'evento' => static::$evento, 'status' => static::$status,
-            'eimgg' => static::$eimgg
-        ]);
+            return view('pages/events', [
+                'groups' => static::$groups,
+                'eventn' => static::$eventn, 'eventd' => static::$eventd,
+                'eventt' => static::$eventt, 'evento' => static::$evento, 'status' => static::$status,
+                'eimgg' => static::$eimgg
+            ]);
+        } else {
+            return redirect('login');
+        }
     }
     public static function getEventdata()
     {
@@ -112,35 +145,36 @@ class fetchdata extends Controller
         if (count($usersk) == 0) {
             $errorgpn = "Login first!";
         } else {
-            if (isset($_COOKIE['username']))
+            if (isset($_COOKIE['username'])) {
                 $username = $_COOKIE['username'];
-            else
-                $username = 'vijay';
-            // output data of each row
 
-            for ($iv = 0; $iv < count($usersk); $iv++) {
-                //echo $row['username'];
-                if (array_key_exists($usersk[$iv]->groupname, static::$gnocount)) {
-                    static::$gnocount[$usersk[$iv]->groupname] += 1;
-                } else {
-                    static::$gnocount[$usersk[$iv]->groupname] = 1;
-                }
-                if ($username == $usersk[$iv]->username) {
-                    array_push(static::$groups, $usersk[$iv]->groupname);
-                    array_push(static::$groupsrole, $usersk[$iv]->roleplay);
-                    if (isset($usersk[$iv]->img)) {
-                        static::$imgg[$usersk[$iv]->groupname] = $usersk[$iv]->img;
+                // output data of each row
+
+                for ($iv = 0; $iv < count($usersk); $iv++) {
+                    //echo $row['username'];
+                    if (array_key_exists($usersk[$iv]->groupname, static::$gnocount)) {
+                        static::$gnocount[$usersk[$iv]->groupname] += 1;
+                    } else {
+                        static::$gnocount[$usersk[$iv]->groupname] = 1;
+                    }
+                    if ($username == $usersk[$iv]->username) {
+                        array_push(static::$groups, $usersk[$iv]->groupname);
+                        array_push(static::$groupsrole, $usersk[$iv]->roleplay);
+                        if (isset($usersk[$iv]->img)) {
+                            static::$imgg[$usersk[$iv]->groupname] = $usersk[$iv]->img;
+                        }
                     }
                 }
-            }
-            $sqlk = DB::select('select username from userslog');
+                $sqlk = DB::select('select username from userslog');
 
-            if (count($sqlk) > 0) {
-                // output data of each row
-                for ($iv = 0; $iv < count($sqlk); $iv++) {
-                    //echo $row['username'];
-                    array_push(static::$users, $sqlk[$iv]->username);
+                if (count($sqlk) > 0) {
+                    // output data of each row
+                    for ($iv = 0; $iv < count($sqlk); $iv++) {
+                        //echo $row['username'];
+                        array_push(static::$users, $sqlk[$iv]->username);
+                    }
                 }
+            } else {
             }
         }
     }

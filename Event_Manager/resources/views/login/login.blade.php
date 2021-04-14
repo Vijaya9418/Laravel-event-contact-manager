@@ -1,11 +1,12 @@
+@extends('../layout/design')
+@section('content')
+<link rel="stylesheet" media="all" href="{{ asset('css/style.css') }}" type="text/css" />
 
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <style>
-        <?php include("style.css") ?>
-    </style>
+
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
@@ -19,36 +20,55 @@
 </head>
 
 <body>
-    <br><br><br> <br><br><br>
+    <br><br><br>
+    @if($errors->any())
+    @foreach($errors->all() as $err)
+    <h4 style='color:red;background-color:white;'>{{$err}}</h4>
+    @endforeach
+    @endif <br><br><br>
+    <div class="bgimage"></div>
 
-    <form action="" method="post">
-        <div class="row  justify-content-center">
-            <div class="col-md-6">
+    <div class="row  justify-content-center">
 
-                <div class="card bg-primary text-white">
+        <div class='col-lg-6 align-self-center'>
 
-                    <div class="card-body">
-                        <h4 class="card-title">Signin</h4>
-                        <form action="">
-                            <div class="form-group">
-                                <label for="username">Username</label>
-                                <input type="text" class="form-control" name="" id="" aria-describedby="helpId" placeholder="username">
-                                <small id="helpId" class="form-text text-white"></small>
-                            </div>
-                            <div class="form-group">
-                                <label for="pwd">Password</label>
-                                <input type="password" class="form-control" name="pwd" id="" placeholder="password">
-                            </div>
-                            <button type="submit" class="btn btn-secondary">Submit</button>
-                        </form>
-                    </div>
+            <div class="cardd text-white p-5">
+
+                <div class="card-body">
+                    <h4 class="form-text text-center">Signin</h4>
+                    <form method="post" action="login">
+                        @csrf
+                        <div class="form-group">
+                            <label for="username">Username</label>
+                            <input required type="text" value="<?php echo $username ?>" class="form-control" name="username" id="username" aria-describedby="helpId" placeholder="username">
+                            <small style="color:red;" id="helpId" class="form-text text-warning"><?php echo $error['username'] ?></small>
+                        </div>
+                        <div class="form-group">
+                            <label for="pwd">Password</label>
+                            <input required type="password" value="<?php echo $pwd ?>" class="form-control" name="pwd" id="pwd" placeholder="password">
+                            <small style="color:red;" id="helpId" class="form-text text-warning"><?php echo $error['pwd'] ?></small>
+                        </div>
+                        <span class="re">
+                            <span class="reb">
+                                <button type="submit" name="login" class="btn3"> <span>Login </span></button>
+                            </span>
+                            <p class="ok">Don't have an account? </p>
+                            <a href="register" class="reglink">Register</a>
+                        </span>
+
+                    </form>
                 </div>
-                <a href="/event_manager/user/reg.php" class="badge m-3   p-3  badge-warning reglink">Register</a>
             </div>
-        </div>
 
-    </form>
+        </div>
+    </div>
+    </div>
+    </div>
+
 
 </body>
 
 </html>
+<!--
+-->
+@endsection

@@ -537,15 +537,16 @@
     border-style: double;
     border-width: thick;
     width: 50%;
-    margin-top: 1%;
+    margin-top: 20%;
     display: inline-block;
     vertical-align: top;
     height: 100%;
     overflow: scroll;
     transform: translate(-50%, -30%);
-    margin-top: 20%;
-    left: 45%;
+    margin-top: 35%;
     position: relative;
+    left: 45%;
+    top: 40%;
 }
 .eventss:hover {
     background-color: #6b0f1a;

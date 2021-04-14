@@ -1,4 +1,4 @@
-@extends('../login/design')
+@extends('../layout/design')
 @section('content')
 <link rel="stylesheet" media="all" href="{{ asset('css/home.css') }}" type="text/css" />
 

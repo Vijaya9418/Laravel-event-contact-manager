@@ -15,15 +15,14 @@
         <a href="events">EVENTS</a>
         <a href="groups">GROUPS</a>
         <a href="explore">EXPLORE</a>
-        <input class="btn1" type="text" placeholder="search">
-        <button class="btn2">Search</button>
+
         <?php
         $name = "name";
 
         if (isset($_COOKIE[$name])) {
-            echo  "<form class='formvi' method='post' action='/event_manager/user/login.php'> <button type='submit' name='logout' class='loginbtn'>Logout</button></form> <div class='namedis'>" . $_COOKIE['name'] . "</div>";
+            echo  " <button type='submit' name='logout' class='loginbtn'><a href='logout'>Logout</a></button> <div class='namedis'>" . $_COOKIE['name'] . "</div>";
         } else {
-            echo " <a class='loginbtn' href='/event_manager/user/login.php'>Login</a>";
+            echo " <a class='loginbtn' href='login'>Login</a>";
         }
         ?>
 
