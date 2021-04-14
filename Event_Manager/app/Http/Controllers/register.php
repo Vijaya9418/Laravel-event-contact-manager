@@ -44,7 +44,27 @@ class register extends Controller
         if (strcmp($req->input('password'), $req->input('cpassword')) != 0) {
             return back()->withInput()->withErrors("Pasword and confirm password not matched");
         }
+        if (static::exists($req->input('username'))) {
+            return back()->withInput()->withErrors("SOrry Username Exists please user different one!");
+        }
         return static::registerdata($req);
+    }
+
+    static function exists($username)
+    {
+        $sql = DB::select("select username from userslog");
+        $check = true;
+        if (count($sql) > 0) {
+            // output data of each row
+            for ($iv = 0; $iv < count($sql); $iv++) {
+                //echo "<script>console.log($row)</script>";
+                // echo "username :" . $row['firstname'] . "<br>";
+                if ($username == $sql[$iv]->username) {
+                    $check = false;
+                }
+            }
+        }
+        return $check;
     }
     static function registerdata($req)
     {

@@ -193,6 +193,97 @@
 
         </span>
     </div>
+    <script>
+        //below group create code...................
+    </script>
+
+    <div id="gc" class="gc">
+        <span class="cgtitle">New Group</span>
+        <form action="creategroup" method="post">
+            @csrf
+            <span class="inputcard">
+                <label for="groupn">Group Name :-</label>
+                <input type="text" name="groupn" id="groupn" placeholder="Name">
+
+            </span>
+            <button class="cgcbtn" type="submit" name="creategroup">Create Group</button>
+        </form>
+        <button class="gcclose" onclick="closegroup()">Cancel</button>
+    </div>
+    <script>
+        function closegroup() {
+            document.getElementById('main').style.filter = 'blur(0px)';
+            document.getElementById('gc').style.visibility = 'hidden';
+        }
+    </script>
+    <?php
+    if (isset($_POST['creategroup'])) {
+        echo "<script> document.getElementById('main').style.filter = 'blur(0px)';
+    document.getElementById('gc').style.visibility = 'hidden';</script>";
+    }
+    ?>
+
+    <script>
+        //below Evet create code...................
+    </script>
+
+
+    <div id="ge" class="ge">
+        <span class="cgtitle">New Event</span>
+        <form action="" method="post">
+            <div class="formsize">
+                <span class="inputcard" style="display: inline-block;">
+                    <label for="eventn">Event Name</label>
+                    <input type="text" name="eventn" id="eventn" placeholder="Name">
+
+                </span>
+                <span class="inputcard" style="display: inline-block;">
+                    <label for="eventdate">Date</label>
+                    <input type='datetime-local' name="eventdate" id="eventdate" placeholder="select date">
+
+                </span>
+
+                <span class="inputcard">
+                    <label for="eventdec">Details</label>
+                    <textarea name="eventdec" id="eventdec" placeholder="Event details"></textarea>
+
+                </span>
+
+
+
+                <span class="inputcard" style="display: inline-block;">
+                    <label for="eventn">Organisded By</label>
+                    <input readonly type="text" value='<?php if (isset($_COOKIE['username'])) echo $_COOKIE['username']; ?>' name="orgby" id="orgby" placeholder="Name">
+
+                </span>
+
+                <span class="inputcard" style="display: inline-block;">
+                    <label for="eventinv">Invities</label>
+                    <select required multiple name="eventinv" id="eventinv">
+                        <option value="Public">Public</option>
+                    </select>
+                </span>
+            </div>
+            <button class="cgcbtn" type="submit" name="createevent">Create Event</button>
+        </form>
+        <button class="gcclose" onclick="closede()">cancel</button>
+    </div>
+    <script>
+        //  console.log("fine");
+        var select = document.getElementById("eventinv");
+
+        <?php
+        for ($i = 0; $i < count($groups); $i++) {
+            echo  "var opt=document.createElement('option');opt.value = '" . $groups[$i] . "';opt.innerHTML = '" . $groups[$i] . "';select.appendChild(opt);";
+        }
+        ?>
+
+        function closede() {
+            document.getElementById('main').style.filter = 'blur(0px)';
+            document.getElementById('ge').style.visibility = 'hidden';
+        }
+    </script>
+
 
 </body>
 
@@ -214,6 +305,78 @@
     }
 </script>
 
+
+
+<script>
+    //below POSt create code...................
+</script>
+
+
+<head>
+    <title>Add post</title>
+</head>
+
+<body>
+    <div id="gpost" class="gpost">
+        <div class="fhalf">
+            <form method="post">
+
+                <span class="titile"> Title </span>
+                <input placeholder="head" name='ptitle' type="text" value="{{old('ptitle')}}">
+                <textarea placeholder="Write HTML here in will be rendered on our left " oninput="framechange()" name="pcontent" id="content" cols="30" rows="10"><?php "{{old('pcontent')}}" ?></textarea>
+
+                <div class="pview">
+                    <label for="eventinv">To</label>
+                    <select required name="pgroup" id="pgroup">
+                        <option value="Public">Public</option>
+                    </select>
+                </div>
+                <button class="postadd" name="postadd">Post</button>
+            </form>
+            <button onclick="closepost()" class="postclose" name="postclose">Close</button>
+        </div>
+        <div class="shalf">
+            <iframe id="FileFrame" src="about:blank" frameborder="1">
+
+            </iframe>
+        </div>
+    </div>
+</body>
+
+<script>
+    var content = document.getElementById('content');
+
+    function framechange() {
+        var doc = document.getElementById('FileFrame').contentWindow.document;
+        doc.open();
+        console.log('called')
+        console.log(content.value)
+        doc.write(content.value);
+        doc.close();
+    }
+
+    function closepost() {
+        document.getElementById('main').style.filter = 'blur(0px)';
+        document.getElementById('gpost').style.visibility = 'hidden';
+    }
+</script>
+
+<script>
+    var selectp = document.getElementById("pgroup");
+    <?php
+    for ($i = 0; $i < count($groups); $i++) {
+        echo  "opt=document.createElement('option');
+        opt.value = '" . $groups[$i] . "';
+        opt.innerHTML = '" . $groups[$i] . "';
+        selectp.appendChild(opt);";
+    }
+    if (isset($_POST['postadd'])) {
+        echo "<script> document.getElementById('main').style.filter = 'blur(0px)';
+        document.getElementById('gpost').style.visibility = 'hidden';</script>";
+    }
+    ?>
+</script>
+
 <?php
 if (isset($_POST['addmembers'])) {
 
@@ -223,5 +386,6 @@ if (isset($_POST['addmembers'])) {
     </script>";
 }
 ?>
+
 
 @endsection

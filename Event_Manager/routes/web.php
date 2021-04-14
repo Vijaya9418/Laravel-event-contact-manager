@@ -26,3 +26,9 @@ Route::get('/logout', [logout::class, 'logout']);
 Route::post('/login', [login::class, 'verifylogin']);
 Route::get('/register', [register::class, 'register']);
 Route::post('/registerdata', [register::class, 'reginsert']);
+
+Route::post('/creategroup', [adddata::class, 'addgroup']);
+
+Route::post('/createevent', [adddata::class, 'addevent']);
+
+Route::post('/postdata', [adddata::class, 'addpost']);
