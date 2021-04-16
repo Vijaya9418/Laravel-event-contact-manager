@@ -16,6 +16,7 @@ use App\Http\Controllers\fetchdata;
 use App\Http\Controllers\login;
 use App\Http\Controllers\logout;
 use App\Http\Controllers\register;
+use App\Http\Controllers\adddata;
 
 Route::get('/', [fetchdata::class, 'index']);
 Route::get('/groups', [fetchdata::class, 'group']);

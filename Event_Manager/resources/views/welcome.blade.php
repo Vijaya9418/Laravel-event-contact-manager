@@ -19,13 +19,13 @@
                     <?php
                     //  $conn = new mysqli($servername, $usernamea, $password, $databasename);
 
-                    use Illuminate\Support\Facades\Cookie;
+                     use Illuminate\Support\Facades\Cookie;
                     use Illuminate\Support\Facades\DB;
 
                     if (count($groups) == 0) {
                         echo "No events yet";
                     } else {
-                        $usname = Cookie::get('username');
+                        $usname = $_COOKIE['username'];
                         for ($iv = 0; $iv < count($eventd); $iv++) {
                             $statusdata = DB::select("select * from eventdatalist where eventname='$eventn[$iv]' and username='$usname'");
 
@@ -54,8 +54,8 @@
                             <span class='etime'> Time :" . $eventt[$iv] . "</span></div>
                             <div class='ntdis'>";
                             if (count($statusdata) > 0) {
-                                for ($iv = 0; $iv < count($statusdata); $iv++) {
-                                    if ($statusdata[$iv]->jstatus == 'joined') {
+                                for ($ivl = 0; $ivl < count($statusdata); $ivl++) {
+                                    if ($statusdata[$ivl]->jstatus == 'joined') {
                                         echo "
                             
                             <input hidden name='eventname' value='" . $eventn[$iv] . "'>
@@ -79,7 +79,8 @@
                             </form>";
                                     }
                                 }
-                            } else {
+                            }
+                             else {
                                 echo "
                             <form method='post'> 
                             <input hidden name='eventname' value='" . $eventn[$iv] . "'>
@@ -104,8 +105,8 @@
                             $joinedData = DB::select("select * from eventdatalist where eventname='$eventn[$iv]'");
                             $joined_count = 0;
                             if (count($joinedData) > 0) {
-                                for ($iv = 0; $iv < count($joinedData); $iv++) {
-                                    if ($joinedData[$iv]->jstatus == 'joined') {
+                                for ($ivl = 0; $ivl < count($joinedData); $ivl++) {
+                                    if ($joinedData[$ivl]->jstatus == 'joined') {
                                         $joined_count += 1;
                                     }
                                 }
