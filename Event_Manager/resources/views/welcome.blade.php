@@ -19,13 +19,13 @@
                     <?php
                     //  $conn = new mysqli($servername, $usernamea, $password, $databasename);
 
-                    use Illuminate\Support\Facades\Cookie;
+                     use Illuminate\Support\Facades\Cookie;
                     use Illuminate\Support\Facades\DB;
 
                     if (count($groups) == 0) {
                         echo "No events yet";
                     } else {
-                        $usname = Cookie::get('username');
+                        $usname = $_COOKIE['username'];
                         for ($iv = 0; $iv < count($eventd); $iv++) {
                             $statusdata = DB::select("select * from eventdatalist where eventname='$eventn[$iv]' and username='$usname'");
 
@@ -54,15 +54,18 @@
                             <span class='etime'> Time :" . $eventt[$iv] . "</span></div>
                             <div class='ntdis'>";
                             if (count($statusdata) > 0) {
-                                for ($iv = 0; $iv < count($statusdata); $iv++) {
-                                    if ($statusdata[$iv]->jstatus == 'joined') {
+                                for ($ivl = 0; $ivl < count($statusdata); $ivl++) {
+                                    if ($statusdata[$ivl]->jstatus == 'joined') {
                                         echo "
                             
                             <input hidden name='eventname' value='" . $eventn[$iv] . "'>
                             <button name='joinevent' class='joined'>Joined</button> 
                             
 
-                            <form method='post'> 
+                            <form action='rsvpedit' method='post'> 
+                            ";
+                            ?> @csrf<?php
+                            echo "
                             <input hidden name='eventname' value='" . $eventn[$iv] . "'>
                             <button name='editevent' class='edit'>Edit</button>
                             </form>";
@@ -73,26 +76,39 @@
                             <button name='joinevent' class='ignored'>Ignored</button> 
                          
 
-                            <form method='post'> 
+                            <form action='rsvpedit' method='post'> 
+                            ";
+                            ?> @csrf<?php
+                            echo"
                             <input hidden name='eventname' value='" . $eventn[$iv] . "'>
                             <button name='editevent' class='edit'>Edit</button>
                             </form>";
                                     }
                                 }
-                            } else {
+                            }
+                             else {
                                 echo "
-                            <form method='post'> 
+                            <form action='rsvpjoin' method='post'> 
+                            ";
+                            ?> @csrf<?php
+                            echo"
                             <input hidden name='eventname' value='" . $eventn[$iv] . "'>
                             <button name='joinevent' class='join'>Join</button> 
                             </form>
 
-                            <form method='post'> 
+                            <form action='rsvpignore' method='post'> 
+                            ";
+                            ?> @csrf<?php
+                            echo"
                             <input hidden name='eventname' value='" . $eventn[$iv] . "'>
                             <button name='ignoreevent' class='notint'>Not Interested</button>
                             </form>";
                             }
                             if ($evento[$iv] == $usname)
-                                echo "<form method='post'>
+                                echo "<form action='rsvpdelete' method='post'>
+                                ";
+                                ?> @csrf<?php
+                            echo"
                                 <input hidden name='eventname' value='" . $eventn[$iv] . "'> 
                             <button name='deleteevent' class='delete'>Delete</button></form>";
                             echo "
@@ -104,8 +120,8 @@
                             $joinedData = DB::select("select * from eventdatalist where eventname='$eventn[$iv]'");
                             $joined_count = 0;
                             if (count($joinedData) > 0) {
-                                for ($iv = 0; $iv < count($joinedData); $iv++) {
-                                    if ($joinedData[$iv]->jstatus == 'joined') {
+                                for ($ivl = 0; $ivl < count($joinedData); $ivl++) {
+                                    if ($joinedData[$ivl]->jstatus == 'joined') {
                                         $joined_count += 1;
                                     }
                                 }
@@ -154,7 +170,7 @@
                             <div class='gimgside'>
                                 <div class='grole'>" . $groupsrole[$iv] . "</div>
                                 <div class='memdis'><img src='./images/members.png'>" . $gnocount[$groups[$iv]] . "</div>
-                            <form method='post'>  
+                            <form action='invite' method='post'>  
 
                             <input hidden name='groupnamei' value='" . $groups[$iv] . "' >
                               <button type='submit' id='" . $groups[$iv] . "'   name='addmembers' class='addmem' ><img src='./images/addmem.png'></button>
@@ -179,7 +195,10 @@
                                 }
                             }
                             if ($check) {
-                                echo "<form method='post'>
+                                echo "<form action='postfetch' method='post'>
+                                ";
+                                ?>@csrf<?php
+                                echo"
                     <input name='datano' hidden value='" . $iv . "'>
                     <button name='postdisplay'><div class='postcard'><span class='title'>" . $pdtitle[$iv] . "</span>
                 <span class='dec'>" . substr($pddata[$iv], 0, 30) . "</span>

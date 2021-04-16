@@ -14,7 +14,7 @@
             if (count($groups) == 0) {
                 echo "No events yet";
             } else {
-                $usname = Cookie::get('username');
+                $usname = $_COOKIE['username'];
                 for ($iv = 0; $iv < count($evento); $iv++) {
                     $statusdata = DB::select("select * from eventdatalist where eventname='$eventn[$iv]' and username='$usname'");
 
@@ -33,8 +33,8 @@
                             <span class='etime'> Time :" . $eventt[$iv] . "</span></div>
                             <div class='ntdis'>";
                     if (count($statusdata) > 0) {
-                        for ($iv = 0; $iv < count($statusdata); $iv++) {
-                            if ($statusdata[$iv]->jstatus == 'joined') {
+                        for ($ivl = 0; $ivl < count($statusdata); $ivl++) {
+                            if ($statusdata[$ivl]->jstatus == 'joined') {
                                 echo "
                             
                             <input hidden name='eventname' value='" . $eventn[$iv] . "'>
@@ -82,8 +82,8 @@
                     $joinedData = DB::select("select * from eventdatalist where eventname='$eventn[$iv]'");
                     $joined_count = 0;
                     if (count($joinedData) > 0) {
-                        for ($iv = 0; $iv < count($joinedData); $iv++) {
-                            if ($joinedData[$iv]->jstatus == 'joined') {
+                        for ($ivk = 0; $ivk < count($joinedData); $ivk++) {
+                            if ($joinedData[$ivk]->jstatus == 'joined') {
                                 $joined_count += 1;
                             }
                         }
