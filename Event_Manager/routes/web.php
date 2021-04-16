@@ -18,6 +18,8 @@ use App\Http\Controllers\logout;
 use App\Http\Controllers\register;
 use App\Http\Controllers\adddata;
 
+use App\Http\Controllers\invite;
+use App\Http\Controllers\eventRSVP;
 Route::get('/', [fetchdata::class, 'index']);
 Route::get('/groups', [fetchdata::class, 'group']);
 Route::get('/events', [fetchdata::class, 'events']);
@@ -33,3 +35,10 @@ Route::post('/creategroup', [adddata::class, 'addgroup']);
 Route::post('/createevent', [adddata::class, 'addevent']);
 
 Route::post('/postdata', [adddata::class, 'addpost']);
+Route::post('/rsvpedit', [eventRSVP::class, 'edit']);
+Route::post('/rsvpjoin', [eventRSVP::class, 'join']);
+Route::post('/rsvpdelete', [eventRSVP::class, 'delete']);
+Route::post('/rsvpignore', [eventRSVP::class, 'ignore']);
+Route::post('/invite', [invite::class, 'invite']);
+Route::post('/postfetch', [invite::class, 'fetch']);
+Route::post('/deletepost', [invite::class, 'delete']);

@@ -62,7 +62,10 @@
                             <button name='joinevent' class='joined'>Joined</button> 
                             
 
-                            <form method='post'> 
+                            <form action='rsvpedit' method='post'> 
+                            ";
+                            ?> @csrf<?php
+                            echo "
                             <input hidden name='eventname' value='" . $eventn[$iv] . "'>
                             <button name='editevent' class='edit'>Edit</button>
                             </form>";
@@ -73,7 +76,10 @@
                             <button name='joinevent' class='ignored'>Ignored</button> 
                          
 
-                            <form method='post'> 
+                            <form action='rsvpedit' method='post'> 
+                            ";
+                            ?> @csrf<?php
+                            echo"
                             <input hidden name='eventname' value='" . $eventn[$iv] . "'>
                             <button name='editevent' class='edit'>Edit</button>
                             </form>";
@@ -82,18 +88,27 @@
                             }
                              else {
                                 echo "
-                            <form method='post'> 
+                            <form action='rsvpjoin' method='post'> 
+                            ";
+                            ?> @csrf<?php
+                            echo"
                             <input hidden name='eventname' value='" . $eventn[$iv] . "'>
                             <button name='joinevent' class='join'>Join</button> 
                             </form>
 
-                            <form method='post'> 
+                            <form action='rsvpignore' method='post'> 
+                            ";
+                            ?> @csrf<?php
+                            echo"
                             <input hidden name='eventname' value='" . $eventn[$iv] . "'>
                             <button name='ignoreevent' class='notint'>Not Interested</button>
                             </form>";
                             }
                             if ($evento[$iv] == $usname)
-                                echo "<form method='post'>
+                                echo "<form action='rsvpdelete' method='post'>
+                                ";
+                                ?> @csrf<?php
+                            echo"
                                 <input hidden name='eventname' value='" . $eventn[$iv] . "'> 
                             <button name='deleteevent' class='delete'>Delete</button></form>";
                             echo "
@@ -155,7 +170,7 @@
                             <div class='gimgside'>
                                 <div class='grole'>" . $groupsrole[$iv] . "</div>
                                 <div class='memdis'><img src='./images/members.png'>" . $gnocount[$groups[$iv]] . "</div>
-                            <form method='post'>  
+                            <form action='invite' method='post'>  
 
                             <input hidden name='groupnamei' value='" . $groups[$iv] . "' >
                               <button type='submit' id='" . $groups[$iv] . "'   name='addmembers' class='addmem' ><img src='./images/addmem.png'></button>
@@ -180,7 +195,10 @@
                                 }
                             }
                             if ($check) {
-                                echo "<form method='post'>
+                                echo "<form action='postfetch' method='post'>
+                                ";
+                                ?>@csrf<?php
+                                echo"
                     <input name='datano' hidden value='" . $iv . "'>
                     <button name='postdisplay'><div class='postcard'><span class='title'>" . $pdtitle[$iv] . "</span>
                 <span class='dec'>" . substr($pddata[$iv], 0, 30) . "</span>
