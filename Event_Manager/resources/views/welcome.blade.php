@@ -34,7 +34,8 @@
 
                             echo "
                             <span class='gpcar'>
-                            <form method='post'>
+                            <form action='imgupdateevent' method='post'>
+                            "?>@csrf<?php echo"
                             <input hidden name='gnimg' value='" . $eventn[$iv] . "'>
                             <button name='imguploadevent'>
                             ";
@@ -152,7 +153,8 @@
                     } else {
                         for ($iv = 0; $iv < count($groups); $iv++) {
                             echo "<div class='gpcar'>
-                            <form method='post'>
+                            <form action='imgupdate' method='post'>
+                            ";?>@csrf<?php echo"
                             <input hidden name='gnimg' value='" . $groups[$iv] . "'>
                             <button name='imgupload'>
                             ";
@@ -171,7 +173,7 @@
                                 <div class='grole'>" . $groupsrole[$iv] . "</div>
                                 <div class='memdis'><img src='./images/members.png'>" . $gnocount[$groups[$iv]] . "</div>
                             <form action='invite' method='post'>  
-
+                            ";?>@csrf<?php echo"
                             <input hidden name='groupnamei' value='" . $groups[$iv] . "' >
                               <button type='submit' id='" . $groups[$iv] . "'   name='addmembers' class='addmem' ><img src='./images/addmem.png'></button>
                               </form>
@@ -338,8 +340,8 @@
 <body>
     <div id="gpost" class="gpost">
         <div class="fhalf">
-            <form method="post">
-
+            <form action='postdata' method="post">
+@csrf
                 <span class="titile"> Title </span>
                 <input placeholder="head" name='ptitle' type="text" value="{{old('ptitle')}}">
                 <textarea placeholder="Write HTML here in will be rendered on our left " oninput="framechange()" name="pcontent" id="content" cols="30" rows="10"><?php "{{old('pcontent')}}" ?></textarea>

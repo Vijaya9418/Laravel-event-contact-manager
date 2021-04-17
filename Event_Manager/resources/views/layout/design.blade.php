@@ -20,10 +20,9 @@
 
     @yield('content','No content for this page!')
 
-    <h1 class='fotter'>Vijaykanth Reddy</h1>
     <!-- Footer -->
     <div class='sidebar'>
-        @yield('sidebar','footer here')
+        @yield('sidebar','')
     </div>
 
     <!-- Optional JavaScript -->
