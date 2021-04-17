@@ -99,4 +99,6 @@ class adddata extends Controller
         }
         return $check;
     }
+
+   
 }

@@ -39,6 +39,13 @@ Route::post('/rsvpedit', [eventRSVP::class, 'edit']);
 Route::post('/rsvpjoin', [eventRSVP::class, 'join']);
 Route::post('/rsvpdelete', [eventRSVP::class, 'delete']);
 Route::post('/rsvpignore', [eventRSVP::class, 'ignore']);
-Route::post('/invite', [invite::class, 'invite']);
+Route::post('/invite', [invite::class, 'invitemem']);
 Route::post('/postfetch', [invite::class, 'fetch']);
 Route::post('/deletepost', [invite::class, 'delete']);
+Route::post('/invitepeople', [invite::class, 'peopleadd']);
+Route::post('/uploads', [invite::class, 'imageupload']);
+Route::post('/imgupdate', [invite::class, 'imgupdate']);
+Route::post('/imgupdated', [invite::class, 'imgupdated']);
+Route::post('/imgupdateevent', [invite::class, 'imgupdatee']);
+
+

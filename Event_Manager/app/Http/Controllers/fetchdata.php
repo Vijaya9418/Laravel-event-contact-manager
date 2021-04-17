@@ -87,6 +87,8 @@ class fetchdata extends Controller
             return redirect('login');
         }
     }
+   
+
     public function events()
     {
         if (isset($_COOKIE['username'])) {
